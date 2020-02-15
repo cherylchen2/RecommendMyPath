@@ -6,6 +6,7 @@ import json
 SEARCH_ENDPOINT = "https://maps.googleapis.com/maps/api/place/textsearch/json"
 DETAILS_ENDPOINT = "https://maps.googleapis.com/maps/api/place/details/json"
 ROUTE_ENDPOINT = "https://maps.googleapis.com/maps/api/distancematrix/json"
+PLACESEARCH_ENDPOINT = "https://api.radar.io/v1/search/places/json"
 API_KEY = "AIzaSyBYhkmFKfz745tUYWf5CskwslxKan6M_-E"  # MUST CHANGE API KEY
 
 #This is just some safe default headers to make sure our connection doesnt somehow get dropped! Ignore these for now
@@ -32,7 +33,18 @@ def api_search(text):
 
     return response.json()
 
-
+def place_search(filter, userLocation):
+    categories = filter.split()
+    
+    for c in categories:
+        recommend = {}
+        params = {"categories"=c,"near"=userLocation,"radius"=2000,"limit"=1}
+        response = requests.get(url=PLACESEARCH_ENDPOINT, params=params, headers=headers)
+        if response != null:
+            recommend[response[places][name]] = response[location][coordinates] 
+    return recommend
+        
+'''
 def pull_data(input_text):
     data = {}
     for result in api_search(input_text)['results']:
@@ -53,6 +65,9 @@ def pull_data(input_text):
                 data[name]["descr"] += open_day + "|| "
     # print(data)
     return data
+'''
+
+
 
 
 def find_route(place_ids):
