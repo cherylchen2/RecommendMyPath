@@ -1,7 +1,7 @@
 import requests
 import json
 
-data = {}
+
 
 SEARCH_ENDPOINT = "https://maps.googleapis.com/maps/api/place/textsearch/json"
 DETAILS_ENDPOINT = "https://maps.googleapis.com/maps/api/place/details/json"
@@ -30,44 +30,43 @@ def api_search(text):
 
     return response.json()
 
-#Main program loop
-while True:
-    try:
-        input_text = input("Enter your query text: ")
-        if (input_text == "quit"): exit(0)
-
-        for result in api_search(input_text)['results']:
-            """
-            print("")
-            print("Name: " + result['name'])
-            print("Address: " + result['formatted_address'])
-            """
-            data[input_text] = {}
-            data[input_text]["name"] = result['name'] + ' ' + result['formatted_address']
-            data[input_text]["descr"] = ""
-
-            details = api_details(result['place_id'])
-            # print("BHours: ")
-
-            if 'result' not in details: continue
-
-            #These if statements check if the key is actually in the JSON object, AKA they check if the place actually
-            # has opening hours, or has reviews before trying to access them! This is a safe practice
-            if 'opening_hours' in details['result'] and 'weekday_text' in details['result']['opening_hours']:
-                for open_day in details['result']['opening_hours']['weekday_text']:
-                    # print("  "+open_day)
-                    data[input_text]["descr"] += open_day + "|| "
-            """
-            if 'reviews' in details['result']:
-                print("Most Recent Review: ")
-                print("   Rating: " + str(details['result']['reviews'][0]['rating']))
-                print("   Text: " + details['result']['reviews'][0]['text'])
-            """
-            print(data[input_text])
-
-    #Exit on ctrl+c
-    except KeyboardInterrupt:
-        print("Exiting program")
-        exit(0)
 
 
+
+def pull_data(input_text):
+    data = {}
+    for result in api_search(input_text)['results']:
+        name = result['name']
+        data[name] = {}
+        data[name]["name"] = result['name'] + ' ' + result['formatted_address']
+        data[name]["descr"] = ""
+
+        details = api_details(result['place_id'])
+        # print("BHours: ")
+
+        if 'result' not in details: continue
+
+        #These if statements check if the key is actually in the JSON object, AKA they check if the place actually
+        # has opening hours, or has reviews before trying to access them! This is a safe practice
+        if 'opening_hours' in details['result'] and 'weekday_text' in details['result']['opening_hours']:
+            for open_day in details['result']['opening_hours']['weekday_text']:
+                # print("  "+open_day)
+                data[name]["descr"] += open_day + "|| "
+
+    print(data)
+    return data
+
+
+if __name__ == "__main__":
+
+    #Main program loop
+    while True:
+        try:
+            input_text = input("Enter your query text: ")
+            if (input_text == "quit"): exit(0)
+            pull_data(input_text)
+            
+        #Exit on ctrl+c
+        except KeyboardInterrupt:
+            print("Exiting program")
+            exit(0)
