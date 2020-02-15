@@ -5,7 +5,9 @@ import json
 
 SEARCH_ENDPOINT = "https://maps.googleapis.com/maps/api/place/textsearch/json"
 DETAILS_ENDPOINT = "https://maps.googleapis.com/maps/api/place/details/json"
+ROUTE_ENDPOINT = "https://maps.googleapis.com/maps/api/distancematrix/json"
 API_KEY = "AIzaSyBYhkmFKfz745tUYWf5CskwslxKan6M_-E"  # MUST CHANGE API KEY
+
 #This is just some safe default headers to make sure our connection doesnt somehow get dropped! Ignore these for now
 headers = {
 
@@ -31,14 +33,11 @@ def api_search(text):
     return response.json()
 
 
-
-
 def pull_data(input_text):
     data = {}
     for result in api_search(input_text)['results']:
         name = result['name']
-        data[name] = {}
-        data[name]["name"] = result['name'] + ' ' + result['formatted_address']
+        data[name] = result
         data[name]["descr"] = ""
 
         details = api_details(result['place_id'])
@@ -52,10 +51,15 @@ def pull_data(input_text):
             for open_day in details['result']['opening_hours']['weekday_text']:
                 # print("  "+open_day)
                 data[name]["descr"] += open_day + "|| "
-
-    print(data)
+    # print(data)
     return data
 
+
+def find_route(place_ids):
+    parameters = {"key":API_KEY, "origins": "place_id:" + "|place_id:".join(place_ids)}
+    # parameters = {"origins": place_ids}
+    response = requests.get(url=ROUTE_ENDPOINT, params=parameters, headers=headers);
+    return response.json()
 
 if __name__ == "__main__":
 
@@ -64,7 +68,8 @@ if __name__ == "__main__":
         try:
             input_text = input("Enter your query text: ")
             if (input_text == "quit"): exit(0)
-            pull_data(input_text)
+            places = pull_data(input_text)
+            print(find_route([place['place_id'] for place in places.values()]))
             
         #Exit on ctrl+c
         except KeyboardInterrupt:
