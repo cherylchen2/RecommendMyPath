@@ -1,4 +1,6 @@
-from flask import Flask, render_template
+
+
+from flask import Flask, render_template, Response, request, redirect, url_for
 app = Flask(__name__) # creating app variable __name__ is the name of the module == __main__
 
 @app.route("/")
@@ -10,6 +12,8 @@ def home():
 @app.route("/about")
 def about():
 	return render_template('about.html')
+
+
 
 
 if __name__ == '__main__': # true if we run the script directly
