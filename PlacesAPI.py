@@ -1,6 +1,6 @@
 import requests
 import json
-
+import time
 
 
 SEARCH_ENDPOINT = "https://maps.googleapis.com/maps/api/place/textsearch/json"
@@ -55,9 +55,16 @@ def pull_data(input_text):
     return data
 
 
-def find_route(place_ids):
-    parameters = {"key":API_KEY, "origins": "place_id:" + "|place_id:".join(place_ids[1:]), "destinations": "place_id:" + place_ids[0]}
-    response = requests.get(url=ROUTE_ENDPOINT, params=parameters, headers=headers);
+def find_route(place_ids, mode="transit", departure_time=0):
+    if departure_time == 0:
+        departure_time = time.time() // 1
+    parameters = {
+        "key": API_KEY, 
+        "origins": "|".join(["place_id:"+place_id for place_id in place_ids[1:]]), "destinations": "place_id:" + place_ids[0],
+        "mode": mode,
+        "departure_time": departure_time
+    }
+    response = requests.get(url=ROUTE_ENDPOINT, params=parameters, headers=headers)
     return response.json()
 
 if __name__ == "__main__":
