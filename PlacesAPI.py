@@ -56,8 +56,7 @@ def pull_data(input_text):
 
 
 def find_route(place_ids):
-    parameters = {"key":API_KEY, "origins": "place_id:" + "|place_id:".join(place_ids)}
-    # parameters = {"origins": place_ids}
+    parameters = {"key":API_KEY, "origins": "place_id:" + "|place_id:".join(place_ids[1:]), "destinations": "place_id:" + place_ids[0]}
     response = requests.get(url=ROUTE_ENDPOINT, params=parameters, headers=headers);
     return response.json()
 
