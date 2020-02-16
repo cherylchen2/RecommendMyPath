@@ -7,6 +7,7 @@ SEARCH_ENDPOINT = "https://maps.googleapis.com/maps/api/place/textsearch/json"
 DETAILS_ENDPOINT = "https://maps.googleapis.com/maps/api/place/details/json"
 ROUTE_ENDPOINT = "https://maps.googleapis.com/maps/api/distancematrix/json"
 API_KEY = "AIzaSyBYhkmFKfz745tUYWf5CskwslxKan6M_-E"  # MUST CHANGE API KEY
+RADAR_API_KEY = "prj_test_sk_5e80f86e68d87ab6840de34f8d3ff00f93e476b9"
 
 #This is just some safe default headers to make sure our connection doesnt somehow get dropped! Ignore these for now
 headers = {
@@ -67,6 +68,19 @@ def find_route(place_ids, mode="transit", departure_time=0):
     response = requests.get(url=ROUTE_ENDPOINT, params=parameters, headers=headers)
     return response.json()
 
+
+
+
+def radar_events(id):
+    h = headers
+    h['Authorization']=RADAR_API_KEY
+
+    result = requests.get("https://api.radar.io/v1/events", headers = h)
+    print(result.json())
+    return result.json()
+
+
+
 if __name__ == "__main__":
 
     #Main program loop
@@ -86,7 +100,8 @@ if __name__ == "__main__":
             #         print("Please input a number")
             #     if input_text == "":
             #         break
-            print(find_route([place['place_id'] for place in places.values()]))
+            # print(find_route([place['place_id'] for place in places.values()]))
+            radar_events(0)
             
         #Exit on ctrl+c
         except KeyboardInterrupt:
