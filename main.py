@@ -1,6 +1,7 @@
 #import places as places
 import PlacesAPI as placesApi
 import userpref as userpref
+import map
 
 if __name__ == "__main__":
     #Get user input
@@ -109,9 +110,28 @@ if __name__ == "__main__":
             break
         '''
     if len(places) != 0:
-        print(placesApi.find_route([place['place_id'] for place in places]))
-    print("Done")
-            
+        good = placesApi.find_route([place['place_id'] for place in places])
+        lst_loc = []
+
+        raw = good['origin_addresses']
+        raw.reverse()
+        for elements in raw:
+            lst_loc.append(elements)
+        raw2 = good['destination_addresses']
+        for e2 in raw2:
+            lst_loc.append(e2)
+        if lst_loc == []:
+            print("Sorry, the algorithm did not return any results.")
+            print("Hint: Pack your day with more engaging activities by adding more preferences!")
+        else:
+            print("Here is your itinerary, a list of addresses in order.")
+            print("Simply use this guide to fill your day with very engaging activities!")
+            print(lst_loc)
+
+    print("The Algorithm has finished running. Enjoy your trip!")
+
+
+
 
 
     #Call api functions
