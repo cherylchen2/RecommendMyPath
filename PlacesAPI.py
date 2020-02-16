@@ -1,7 +1,7 @@
 import requests
 import json
 import time
-import random
+import random as random
 
 
 SEARCH_ENDPOINT = "https://maps.googleapis.com/maps/api/place/textsearch/json"
@@ -59,11 +59,21 @@ def pull_data(input_text, userLocation):
                 data[name]["descr"] += open_day + "|| "
         #print(data)
         #print("pull_data done")
-    if data is None: return None
-    output = random.choice(list(data.keys()))
-    if output is not None:
-        return data[output]
-    return None
+    if data is None:
+        return None
+    else :
+        print(len(data))
+        randomNum = random.randint(0,len(data))
+        x = 0
+        for k in data.keys():
+            if x != randomNum:
+                x = x + 1
+            else:
+                output = data.get(k)
+                return output
+ #       if data.keys is not None:
+  #          output = random.choice(list(data.keys()))
+
 
 
 def find_route(place_ids, mode="transit", departure_time=0):
@@ -72,8 +82,8 @@ def find_route(place_ids, mode="transit", departure_time=0):
     parameters = {
         "key": API_KEY, 
         "origins": "|".join(["place_id:"+place_id for place_id in place_ids[1:]]), "destinations": "place_id:" + place_ids[0],
-        "mode": mode,
-        "departure_time": departure_time
+        "mode": mode#,
+        #"departure_time": departure_time
     }
     response = requests.get(url=ROUTE_ENDPOINT, params=parameters, headers=headers)
     return response.json()

@@ -23,8 +23,10 @@ if __name__ == "__main__":
         userInput = int(input())
         if (userInput == 0):
             i = 1
+
     inpute = ""
     places = []
+
     for c in listCategory.keys():
         if listCategory.get(c) == 1:
             if c == "Restaurant":
@@ -52,20 +54,25 @@ if __name__ == "__main__":
                         places.append(result)
                         break
 
+
     # print(inpute)
     # places = placesApi.pull_data(inpute, "43.662127, -79.387779")
     # print(places)
+    '''
     for i in range(len(places)):
         print("{0}: {1}".format(i, places[i]))
         input_text = input("Would you like to remove any of these items?")
+        #if input_text != 0 
         try:
+            print(input_text)
             places.pop(int(input_text), None)
         except:
             print("Please input a number")
         if input_text == "":
             break
+        '''
     if len(places) != 0:
-        print(placesApi.find_route([place['place_id'] for place in places.values()]))
+        print(placesApi.find_route([place['place_id'] for place in places]))
     print("Done")
             
 
