@@ -36,18 +36,18 @@ def api_search(text, userLocation):
 
 
 def pull_data(input_text, userLocation):
-    #print("Called pulldata")
+#print("Called pulldata")
     data = {}
 
     for result in api_search(input_text, userLocation)['results']:
         #print("Called apisearch")
-        #print(result)
+        #print(result)        
         name = result['name']
         data[name] = result
         data[name]["descr"] = ""
 
         details = api_details(result['place_id'])
-       # print("BHours: ")
+        # print("BHours: ")
 
         if 'result' not in details: continue
 
@@ -57,8 +57,8 @@ def pull_data(input_text, userLocation):
             for open_day in details['result']['opening_hours']['weekday_text']:
                 #print("  "+open_day)
                 data[name]["descr"] += open_day + "|| "
-        #print(data)
-        #print("pull_data done")
+    #print(data)
+    #print("pull_data done")
     if data is None:
         return None
     else :
@@ -78,12 +78,13 @@ def pull_data(input_text, userLocation):
 
 def find_route(place_ids, mode="transit", departure_time=0):
     if departure_time == 0:
-        departure_time = time.time() // 1
+        departure_time = int(time.time())
+    if len(place_ids) == 0: return place_ids
     parameters = {
         "key": API_KEY, 
         "origins": "|".join(["place_id:"+place_id for place_id in place_ids[1:]]), "destinations": "place_id:" + place_ids[0],
-        "mode": mode#,
-        #"departure_time": departure_time
+        "mode": mode,
+        "departure_time": departure_time
     }
     response = requests.get(url=ROUTE_ENDPOINT, params=parameters, headers=headers)
     return response.json()
@@ -100,7 +101,7 @@ def radar_events():
     return result.json()
 
 
-'''
+
 if __name__ == "__main__":
 
     #Main program loop
@@ -108,23 +109,22 @@ if __name__ == "__main__":
         try:
             input_text = input("Enter your query text: ")
             if (input_text == "quit"): exit(0)
-            places = pull_data(input_text)
-            # while True:
-            #     for i in range(len(places)):
-            #         print("{0}: {1}".format(i, places[i]))
-            #     input_text = input("Would you like to remove any of these items?")
-            #     try:
-            #         places.pop(int(input_text), None)
+            places = pull_data(input_text, {"lat": 123, "lng": 111})
+            while True:
+                for i in range(len(places)):
+                    print("{0}: {1}".format(i, places[i]))
+                input_text = input("Would you like to remove any of these items?")
+                try:
+                    places.pop(int(input_text))
 
-            #     except:
-            #         print("Please input a number")
-            #     if input_text == "":
-            #         break
-            # print(find_route([place['place_id'] for place in places.values()]))
+                except:
+                    print("Please input a number")
+                if input_text == "":
+                    break
+            print(find_route([place['place_id'] for place in places.values()]))
             radar_events()
             
         #Exit on ctrl+c
         except KeyboardInterrupt:
             print("Exiting program")
             exit(0)
-'''
