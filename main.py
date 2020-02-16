@@ -74,8 +74,8 @@ if __name__ == "__main__":
         '''
     if len(places) != 0:
         good = placesApi.find_route([place['place_id'] for place in places])
-        print(placesApi.find_route([place['place_id'] for place in places]))
         lst_loc = []
+
         raw = good['origin_addresses']
         raw.reverse()
         for elements in raw:
@@ -83,12 +83,13 @@ if __name__ == "__main__":
         raw2 = good['destination_addresses']
         for e2 in raw2:
             lst_loc.append(e2)
-        print("here is your itinerary, a list of addresses in order.")
-        print(lst_loc)
-
-
-    else:
-        print("Sorry, the algorithm did not return any results.")
+        if lst_loc == []:
+            print("Sorry, the algorithm did not return any results.")
+            print("Hint: Pack your day with more engaging activities by adding more preferences!")
+        else:
+            print("Here is your itinerary, a list of addresses in order.")
+            print("Simply use this guide to fill your day with very engaging activities!")
+            print(lst_loc)
 
     print("The Algorithm has finished running. Enjoy your trip!")
 
