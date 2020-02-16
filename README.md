@@ -1,3 +1,5 @@
+## HappyTravel!!!
+
 ## Inspiration
 We all had a common qualm about traveling abroad: while it was exciting to see new stuff at newer places at even more novel nations, we just found it hard to plan the trip and get around. Luckily for us, google maps and overpriced roaming helped us evade the fate of getting lost in the city. 
 
@@ -19,4 +21,4 @@ We learned numerous different technologies we have not used before. Some of our 
 ## What's next for HappyTravels
 The nearest goal for HappyTravels is to create a clean website application that will be easier for our users to interact with. It may expand into a mobile application as well as it is common for a traveler to bring their phone wherever they travel to. In the long term, we may look into utilizing machine learning and data from all our users to create a more effective location filter that can enhance user experience.
 
-
+Happy travelling!
