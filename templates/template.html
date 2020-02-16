@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+    {{"decoupled-map"|googlemap_js(37.4419, -122.1419, markers=[(37.4419, -122.1419)])}}
+    {{mymap.js}}
+    {{sndmap.js}}
+</head>
+<body>
+<h1>TheWay Webapp</h1>
+
+<p>Date/Time: <span id="datetime"></span></p><script>var dt = new Date();
+document.getElementById("datetime").innerHTML=dt.toLocaleString();</script>
+
+
+<h3> Safe Travels!</h3>
+{{sndmap.html}}
+
+</body>
+</html>
