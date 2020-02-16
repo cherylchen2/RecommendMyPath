@@ -11,12 +11,17 @@ class User:
     data: {category(food): [specific(middle eastern), Time]}
     """
 
-    preferences: List
-    data: Dict
+    food: Dict
+    arts: Dict
+    entertainment: Dict
+    shopping: Dict
     in_home_country: bool
 
-    def __init__(self, preferences):
-        self.preferences = preferences
-        self.data = {}
+    def __init__(self, food, arts, entertainment, shopping):
+        self.food = food
+        self.arts = arts
+        self.entertainment = entertainment
+        self.shopping = shopping
+
 
 

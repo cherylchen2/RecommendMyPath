@@ -35,14 +35,16 @@ def api_search(text):
 
 
 def pull_data(input_text):
+    print("Called pulldata")
     data = {}
     for result in api_search(input_text)['results']:
+        print("Called apisearch")
         name = result['name']
         data[name] = result
         data[name]["descr"] = ""
 
         details = api_details(result['place_id'])
-        # print("BHours: ")
+        print("BHours: ")
 
         if 'result' not in details: continue
 
@@ -50,9 +52,10 @@ def pull_data(input_text):
         # has opening hours, or has reviews before trying to access them! This is a safe practice
         if 'opening_hours' in details['result'] and 'weekday_text' in details['result']['opening_hours']:
             for open_day in details['result']['opening_hours']['weekday_text']:
-                # print("  "+open_day)
+                print("  "+open_day)
                 data[name]["descr"] += open_day + "|| "
-    # print(data)
+        print(data)
+        print("pull_data done")
     return data
 
 
@@ -80,7 +83,7 @@ def radar_events():
     return result.json()
 
 
-
+'''
 if __name__ == "__main__":
 
     #Main program loop
@@ -107,3 +110,4 @@ if __name__ == "__main__":
         except KeyboardInterrupt:
             print("Exiting program")
             exit(0)
+'''
