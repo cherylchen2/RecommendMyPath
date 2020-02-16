@@ -71,7 +71,7 @@ def find_route(place_ids, mode="transit", departure_time=0):
 
 
 
-def radar_events(id):
+def radar_events():
     h = headers
     h['Authorization']=RADAR_API_KEY
 
@@ -101,7 +101,7 @@ if __name__ == "__main__":
             #     if input_text == "":
             #         break
             # print(find_route([place['place_id'] for place in places.values()]))
-            radar_events(0)
+            radar_events()
             
         #Exit on ctrl+c
         except KeyboardInterrupt:
