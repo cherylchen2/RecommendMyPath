@@ -3,20 +3,20 @@
 def main():
     #Get user input
     i = 0
-    listPreferences = {"Restaurant":0,"Arts & Culture":0,"Entertainment":0,"Shopping":0}
+    listCategory = {"Restaurant":0,"Arts & Culture":0,"Entertainment":0,"Shopping":0}
     while i == 0:
         print("Select preferences:\n0: Restaurant\n1: Arts & Culture\n2: Entertainment\n3: Shopping\n")
         userInput = int(input())
         if (userInput == 0):
-            listPreferences["Restaurant"] = 1
+            listCategory["Restaurant"] = 1
         if (userInput == 1):
-            listPreferences["Arts & Culture"] = 1
+            listCategory["Arts & Culture"] = 1
         if (userInput == 2):
-            listPreferences["Entertainment"] = 1
+            listCategory["Entertainment"] = 1
         if (userInput == 3):
-            listPreferences["Shopping"] = 1
+            listCategory["Shopping"] = 1
         print("Do you want to add additional preferences\n0:No\n1:Yes")
-        print(listPreferences)
+        print(listCategory)
         userInput = int(input())
         if (userInput == 0):
             i = 1
