@@ -1,6 +1,7 @@
 import requests
 import json
 import time
+import random
 
 
 SEARCH_ENDPOINT = "https://maps.googleapis.com/maps/api/place/textsearch/json"
@@ -26,25 +27,27 @@ def api_details(id):
     return response.json()
 
 #The API to search for a place given some query text
-def api_search(text):
-    parameters = {"query": text, "key": API_KEY}
+def api_search(text, userLocation):
+    parameters = {"query": text, "key": API_KEY, "location":"43.662127,-79.387779", "radius":2000}
 
     response = requests.get(url=SEARCH_ENDPOINT,params=parameters, headers=headers)
-
+    #print(response.json())
     return response.json()
 
 
-def pull_data(input_text):
-    print("Called pulldata")
+def pull_data(input_text, userLocation):
+    #print("Called pulldata")
     data = {}
-    for result in api_search(input_text)['results']:
-        print("Called apisearch")
+
+    for result in api_search(input_text, userLocation)['results']:
+        #print("Called apisearch")
+        #print(result)
         name = result['name']
         data[name] = result
         data[name]["descr"] = ""
 
         details = api_details(result['place_id'])
-        print("BHours: ")
+       # print("BHours: ")
 
         if 'result' not in details: continue
 
@@ -52,11 +55,15 @@ def pull_data(input_text):
         # has opening hours, or has reviews before trying to access them! This is a safe practice
         if 'opening_hours' in details['result'] and 'weekday_text' in details['result']['opening_hours']:
             for open_day in details['result']['opening_hours']['weekday_text']:
-                print("  "+open_day)
+                #print("  "+open_day)
                 data[name]["descr"] += open_day + "|| "
-        print(data)
-        print("pull_data done")
-    return data
+        #print(data)
+        #print("pull_data done")
+    if data is None: return None
+    output = random.choice(list(data.keys()))
+    if output is not None:
+        return data[output]
+    return None
 
 
 def find_route(place_ids, mode="transit", departure_time=0):

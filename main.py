@@ -4,7 +4,7 @@ import userpref as userpref
 
 if __name__ == "__main__":
     #Get user input
-    user = userpref.User({"Chinese":3,"Korean": 4, "Quiet": 1, "Mediterranean": 3},{"Fine arts":3,"Theatre":2},{"Movie":8,"KTV":2},{"Althetic":3,"Formal":2})
+    user = userpref.User({"Chinese":4,"Korean": 4, "Quiet": 3, "Mediterranean": 1},{"Fine arts":3,"Theatre":2},{"Movie":8,"KTV":2},{"Althetic":3,"Formal":2})
     i = 0
     listCategory = {"Restaurant":0,"Arts & Culture":0,"Entertainment":0,"Shopping":0}
     while i == 0:
@@ -23,39 +23,38 @@ if __name__ == "__main__":
         userInput = int(input())
         if (userInput == 0):
             i = 1
-    input = ""
-    for c in listCategory:
-        if c == 1:
+    inpute = ""
+    places = []
+    for c in listCategory.keys():
+        if listCategory.get(c) == 1:
             if c == "Restaurant":
-                if len(user.food) > 5:
-                    for f in user.food:
-                        input = input + f
-                else:
-                    for f in user.food:
-                        input = input + f
-            if c == "Arts & Culture":
-                if len(user.arts) > 5:
-                    for a in user.arts:
-                        input = input + a
-                else:
-                    for a in user.arts:
-                        input = input + a
-            if c == "Entertainment":
-                if len(user.entertainment) > 5:
-                    for f in user.entertainment:
-                        input = input + f
-                else:
-                    for f in user.entertainment:
-                        input = input + f
-            else:
-                if len(user.shopping) > 5:
-                    for f in user.shopping:
-                        input = input + f
-                else:
-                    for f in user.shopping:
-                        input = input + f
-    places = placesApi.pull_data(input)
-    print(places)
+                for f in user.food:
+                    result = placesApi.pull_data(f, "43.662127, -79.387779")
+                    if result is not None:
+                        places.append(result)
+                        break
+            elif c == "Arts & Culture":
+                for f in user.arts:
+                    result = placesApi.pull_data(f, "43.662127, -79.387779")
+                    if result is not None:
+                        places.append(result)
+                        break
+            elif c == "Entertainment":
+                for f in user.entertainment:
+                    result = placesApi.pull_data(f, "43.662127, -79.387779")
+                    if result is not None:
+                        places.append(result)
+                        break
+            elif c == "Shopping":
+                for f in user.shopping:
+                    result = placesApi.pull_data(f, "43.662127, -79.387779")
+                    if result is not None:
+                        places.append(result)
+                        break
+
+    # print(inpute)
+    # places = placesApi.pull_data(inpute, "43.662127, -79.387779")
+    # print(places)
     for i in range(len(places)):
         print("{0}: {1}".format(i, places[i]))
         input_text = input("Would you like to remove any of these items?")
