@@ -75,6 +75,17 @@ if __name__ == "__main__":
             input_text = input("Enter your query text: ")
             if (input_text == "quit"): exit(0)
             places = pull_data(input_text)
+            # while True:
+            #     for i in range(len(places)):
+            #         print("{0}: {1}".format(i, places[i]))
+            #     input_text = input("Would you like to remove any of these items?")
+            #     try:
+            #         places.pop(int(input_text), None)
+
+            #     except:
+            #         print("Please input a number")
+            #     if input_text == "":
+            #         break
             print(find_route([place['place_id'] for place in places.values()]))
             
         #Exit on ctrl+c

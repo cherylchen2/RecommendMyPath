@@ -1,2 +1,4 @@
 env
-.vscode/settings.json
+.vscode
+.idea
+__pycache__
