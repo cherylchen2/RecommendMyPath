@@ -18,7 +18,8 @@ def mapview():
         identifier="view-side",
         lat=43.782421,
         lng=-79.186651,
-        markers=[(43.782421, -79.186651)]
+        markers=[(43.782421, -79.186651), (43.774823, -79.258845)
+                 ]
     )
     sndmap = Map(
         identifier="sndmap",
@@ -27,8 +28,8 @@ def mapview():
         markers=[
             {
                 'icon': 'http://maps.google.com/mapfiles/ms/icons/green-dot.png',
-                'lat': 37.4419,
-                'lng': -122.1419,
+                'lat': 43.774823,
+                'lng': -79.258845,
                 'infobox': "<b>Scarborough Town Center</b>"
             },
             {
