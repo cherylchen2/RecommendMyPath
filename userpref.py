@@ -13,9 +13,10 @@ class User:
 
     preferences: List
     data: Dict
+    in_home_country: bool
 
     def __init__(self, preferences):
         self.preferences = preferences
         self.data = {}
 
-    
+
