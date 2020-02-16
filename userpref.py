@@ -2,6 +2,8 @@
 
 # report duration after entry and exit
 import main
+from typing import List, Dict
+
 
 class User:
 
@@ -9,9 +11,11 @@ class User:
     data: {category(food): [specific(middle eastern), Time]}
     """
 
-    preferences: list
-    data: dict
+    preferences: List
+    data: Dict
 
     def __init__(self, preferences):
         self.preferences = preferences
-        
+        self.data = {}
+
+    
