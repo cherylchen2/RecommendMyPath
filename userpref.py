@@ -11,10 +11,10 @@ class User:
     data: {category(food): [specific(middle eastern), Time]}
     """
 
-    food: Dict
-    arts: Dict
-    entertainment: Dict
-    shopping: Dict
+    food: list
+    arts: list
+    entertainment: list
+    shopping: list
     in_home_country: bool
 
     def __init__(self, food, arts, entertainment, shopping, in_home_country):
@@ -24,23 +24,25 @@ class User:
         self.shopping = shopping
         self.in_home_country = in_home_country
 
+    def listExtender(self, oldlist):
+        newList = []
+        for x in oldlist:
+            newList.insert(0,[x,0])
+        return newList
+
     def otherCountryPref(self, food, arts, entertainment, shopping):
         if food != "":
-            foodList = food.split()
-            for f in foodList:
-                self.food[f] = ['T',0] 
+            foodList = self.listExtender(food.split(","))
+            self.food.insert(0,foodList)
         if arts != "":
-            artsList = arts.split()
-            for f in artsList:
-                self.arts[f] = ['T',0] 
+            artsList = self.listExtender(arts.split(","))
+            self.arts.insert(0,artsList)
         if entertainment != "":
-            entertainmentList = entertainment.split()
-            for f in entertainmentList:
-                self.entertainment[f] = ['T',0] 
+            entertainmentList = self.listExtender(entertainment.split(","))
+            self.entertainment.insert(0,entertainmentList)
         if shopping != "":
-            shopList = shopping.split()
-            for f in shopList:
-                self.shopping[f] = ['T',0] 
+            shopList = self.listExtender(shopping.split(","))
+            self.shopping.insert(0,shopList)
         print(self.food)
         print(self.arts)
         print(self.entertainment)

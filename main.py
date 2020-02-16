@@ -7,9 +7,9 @@ if __name__ == "__main__":
     #Get user input
     userSimInput = input("Simulate in home country or outside of home country?")
     if  userSimInput == "In":
-        user = userpref.User({"Chinese":4,"Korean": 4, "Quiet": 3, "Mediterranean": 1},{"Fine arts":3,"Theatre":2},{"Movie":8,"KTV":2},{"Althetic":3,"Formal":2}, True)
+        user = userpref.User([["Chinese",4],["Korean",4], ["Quiet",3], ["Mediterranean",1]],[["Fine arts",3],["Theatre",2]],[["Movie",8],["KTV",2]],[["Althetic",3],["Formal",2]], True)
     else:
-        user = userpref.User({"Chinese":4,"Korean": 4, "Quiet": 3, "Mediterranean": 1},{"Fine arts":3,"Theatre":2},{"Movie":8,"KTV":2},{"Althetic":3,"Formal":2}, False)
+        user = userpref.User([["Chinese",4],["Korean",4], ["Quiet",3], ["Mediterranean",1]],[["Fine arts",3],["Theatre",2]],[["Movie",8],["KTV",2]],[["Althetic",3],["Formal",2]], False)
     i = 0
     listCategory = {"Restaurant":0,"Arts & Culture":0,"Entertainment":0,"Shopping":0}
 
@@ -26,19 +26,16 @@ if __name__ == "__main__":
                 print("What do you want to try new in food?")
                 newFoodPref = input()
             if (userQuery == 1):
-                listCategory["Arts & Culture"] = 1
                 print("What do you want to try new in Arts & Culture?")
                 newArtPref = input()
             if (userQuery == 2):
-                listCategory["Entertainment"] = 1
                 print("What do you want to try new in the Entertainment?")
                 newEntInput = input()
             if (userQuery == 3):
-                listCategory["Shopping"] = 1
                 print("What do you want to try new in the Shopping")
                 newShopInput = input()
             if (userQuery == -1):
-                break
+                done = 1
         user.otherCountryPref(newFoodPref, newArtPref, newEntInput, newShopInput)
 
         
@@ -132,6 +129,11 @@ if __name__ == "__main__":
 
 
 
+
+    print(placesApi.find_route([place['place_id'] for place in places]))
+    print("Done")
+
+            
 
 
     #Call api functions
